@@ -1,0 +1,6 @@
+[submodule "ext/pytorch"]
+	path = ext/pytorch
+	url = git@github.com:pytorch/pytorch.git
+[submodule "ext/opencv"]
+	path = ext/opencv
+	url = git@github.com:opencv/opencv.git

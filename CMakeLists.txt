@@ -1,8 +1,13 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.8.0...3.12.0)
+project(nlos-nerf LANGUAGES C CXX)
 
-project(cNeRF VERSION 1.0
-              DESCRIPTION "Neural radiance fields with libtorch"
-              LANGUAGES CXX)
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+set(VERSION_MAJOR 0)
+set(VERSION_MINOR 1)
+set(VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
 
 # Configure CUDA
 find_package(CUDA)
@@ -14,12 +19,11 @@ find_library(LIBNVTOOLSEXT
     PATH_SUFFIXES lib64 lib
 )
 
-# Configure libtorch and OpenCV
-list(APPEND CMAKE_PREFIX_PATH "libtorch")
-find_package(Torch REQUIRED)
-find_package(OpenCV REQUIRED)
+#build dependencies as submodules
+message(STATUS "Building dependencies added as submodules")
+add_subdirectory(${CMAKE_SOURCE_DIR}/ext)
 
-set(CMAKE_CXX_STANDARD 20)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
